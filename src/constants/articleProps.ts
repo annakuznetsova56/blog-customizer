@@ -5,7 +5,7 @@ export const fontFamilyClasses = [
 	'days-one',
 	'merriweather',
 ] as const;
-
+ 
 export type FontFamiliesClasses = (typeof fontFamilyClasses)[number];
 
 export type OptionType = {
