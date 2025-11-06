@@ -1,6 +1,6 @@
 import { ArrowButton } from 'src/ui/arrow-button';
 import { Button } from 'src/ui/button';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import clsx from 'clsx';
 import { Text } from 'src/ui/text';
 import { Select } from 'src/ui/select';
@@ -13,6 +13,8 @@ import { backgroundColors } from 'src/constants/articleProps';
 import { contentWidthArr } from 'src/constants/articleProps';
 import { ArticleStateType } from 'src/constants/articleProps';
 import { defaultArticleState } from 'src/constants/articleProps';
+import { useEnterSubmit } from 'src/ui/select/hooks/useEnterSubmit';
+import { useOutsideClickClose } from 'src/ui/select/hooks/useOutsideClickClose';
 
 import styles from './ArticleParamsForm.module.scss';
 
@@ -22,8 +24,20 @@ type FormProps = {
 
 export const ArticleParamsForm = (props: FormProps) => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
-	const [formState, setFormState] =
-		useState<ArticleStateType>(defaultArticleState);
+	const [formState, setFormState] = useState<ArticleStateType>(defaultArticleState);
+
+    const formRef = useRef<HTMLDivElement>(null);
+
+    useEnterSubmit({
+        placeholderRef: formRef,
+        onChange: setIsOpen
+    });
+
+	useOutsideClickClose({
+		isOpen: isOpen,
+		rootRef: formRef,
+		onChange: setIsOpen
+	})
 
 	const handleArrowClick = () => {
 		setIsOpen((isOpen) => !isOpen);
@@ -63,6 +77,7 @@ export const ArticleParamsForm = (props: FormProps) => {
 		<>
 			<ArrowButton isOpen={isOpen} onClick={handleArrowClick} />
 			<aside
+				ref={formRef}
 				className={clsx(styles.container, {
 					[styles.container_open]: isOpen,
 				})}>

@@ -16,26 +16,22 @@ const domNode = document.getElementById('root') as HTMLDivElement;
 const root = createRoot(domNode);
 
 const App = () => {
-	const [appState, setAppState] = useState<CSSProperties>({
-		'--font-family': defaultArticleState.fontFamilyOption.value,
-		'--font-size': defaultArticleState.fontSizeOption.value,
-		'--font-color': defaultArticleState.fontColor.value,
-		'--container-width': defaultArticleState.contentWidth.value,
-		'--bg-color': defaultArticleState.backgroundColor.value,
-	} as CSSProperties);
+	const [appState, setAppState] = useState<ArticleStateType>(defaultArticleState);
 
 	const updateApp = (formState: ArticleStateType) => {
-		setAppState({
-			'--font-family': formState.fontFamilyOption.value,
-			'--font-size': formState.fontSizeOption.value,
-			'--font-color': formState.fontColor.value,
-			'--container-width': formState.contentWidth.value,
-			'--bg-color': formState.backgroundColor.value,
-		} as CSSProperties);
+		setAppState(formState);
 	};
 
 	return (
-		<main className={clsx(styles.main)} style={appState}>
+		<main className={clsx(styles.main)} style={
+				{
+					'--font-family': appState.fontFamilyOption.value,
+					'--font-size': appState.fontSizeOption.value,
+					'--font-color': appState.fontColor.value,
+					'--container-width': appState.contentWidth.value,
+					'--bg-color': appState.backgroundColor.value,
+				} as CSSProperties
+			}>
 			<ArticleParamsForm handleSubmit={updateApp} />
 			<Article />
 		</main>
