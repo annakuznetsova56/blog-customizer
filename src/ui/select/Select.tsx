@@ -63,7 +63,7 @@ export const Select = (props: SelectProps) => {
 				data-testid='selectWrapper'>
 				<img src={arrowDown} alt='иконка стрелочки' className={styles.arrow} />
 				<div
-					className={clsx(
+					className={clsx( 
 						styles.placeholder,
 						(styles as Record<string, string>)[optionClassName]
 					)}
